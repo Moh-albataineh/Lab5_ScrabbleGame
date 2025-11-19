@@ -45,6 +45,15 @@ public class App {
                 System.out.println("yes, can spell " + word);
             } else {
                 System.out.println("no, cannot spell " + word);
+
+
+                System.out.print("Do you want to change one tile (yes,no)? ");
+                String changeAns = in.next().toLowerCase();
+                if (changeAns.equals("yes")) {
+                    changeRandomTile(hand);
+                    System.out.print("New tile set: ");
+                    printHand(hand);
+                }
             }
 
             System.out.print("Do you want to continue(yes,no)? ");
@@ -53,6 +62,7 @@ public class App {
             if (!answer.equals("yes")) {
                 keepPlaying = false;
             } else {
+
                 getNewTileSet(hand, 7);
             }
         }
@@ -93,6 +103,30 @@ public class App {
         tiles.add(new Tile('X', 8));
         tiles.add(new Tile('Y', 4));
         tiles.add(new Tile('Z', 10));
+    }
+
+     /**
+     * Replaces one random tile in the player's hand with a new random tile
+     * from the full list of tiles.
+     *
+     * @param hand the current set of tiles in the player's hand
+     */
+    public static void changeRandomTile(ArrayList<Tile> hand) {
+        if (hand.isEmpty()) {
+            return;
+        }
+
+        Random rand = new Random();
+
+
+        int handIndex = rand.nextInt(hand.size());
+
+
+        int allIndex = rand.nextInt(allTiles.size());
+        Tile base = allTiles.get(allIndex);
+
+
+        hand.set(handIndex, new Tile(base.getLetter(), base.getValue()));
     }
 
     /**
@@ -165,7 +199,7 @@ public class App {
                 return false;
             }
         }
-
+        
         hand.clear();
         hand.addAll(temp);
 
